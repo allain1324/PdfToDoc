@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 21, 2021 at 08:05 AM
+-- Generation Time: Nov 21, 2021 at 10:45 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -30,16 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `idAccount` int(11) NOT NULL,
   `username` text NOT NULL,
-  `password` text NOT NULL
+  `password` text NOT NULL,
+  `admin` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`idAccount`, `username`, `password`) VALUES
-(1, 'admin', 'admin'),
-(2, 'client1', 'client1');
+INSERT INTO `account` (`idAccount`, `username`, `password`, `admin`) VALUES
+(1, 'admin', 'admin', 1),
+(2, 'client1', 'client1', 0);
 
 -- --------------------------------------------------------
 
