@@ -4,6 +4,7 @@ public class account {
 	private int idAccount;
 	private String username;
 	private String password;
+	private boolean admin;
 	public int getIdAccount() {
 		return idAccount;
 	}
@@ -22,10 +23,17 @@ public class account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 	
-	public account(int id,String user,String pass) {
+	public account(int id,String user,String pass, boolean admin) {
 		this.idAccount = id;
 		this.username = user;
 		this.password = pass;
+		this.admin = admin;
 	}
 }

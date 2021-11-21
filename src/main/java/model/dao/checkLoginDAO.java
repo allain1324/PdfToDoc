@@ -14,8 +14,8 @@ public class checkLoginDAO {
 			 java.sql.Connection con;
 			 
 			 String query = "SELECT * FROM account where username= ? AND password = ?";
-//			 Class.forName("com.mysql.cj.jdbc.Driver");
-			 Class.forName("com.mysql.jdbc.Driver");
+			 Class.forName("com.mysql.cj.jdbc.Driver");
+//			 Class.forName("com.mysql.jdbc.Driver");
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/DB_LTMang","root","");
 			 PreparedStatement prepare = con.prepareStatement(query);
 			 prepare.setString(1,username);
@@ -26,7 +26,8 @@ public class checkLoginDAO {
 		    	 int idAccount = Integer.parseInt(rs.getString(1));
 		    	 String user = rs.getString(2);
 		    	 String pass = rs.getString(3);
-		    	 account ac = new account(idAccount,user,pass);
+		    	 boolean admin = Boolean.valueOf(rs.getString(4));
+		    	 account ac = new account(idAccount,user,pass,admin);
 		    	 return ac;
 		     }else{
 		    	 return null;
