@@ -14,7 +14,7 @@
 			<br> Password: <input type="password" name="password" /><br>
 			<div style="margin-left: auto; margin-right: auto; width: 240px; margin-top:20px">
 				<input type="submit" name="login" value="LOGIN" style="width: 105px;">
-				<input type="submit" name="reset" value="Reset" style="width: 105px;">
+				<input type="reset" name="reset" value="RESET" style="width: 105px;">
 			</div>
 		</form>
 	</div>

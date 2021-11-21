@@ -33,9 +33,12 @@ public class CheckLoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		account ac = checkLoginBO.getAccountBO(userName,password);
 		if(ac != null) {
-			destination = "/main.jsp";
-			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);
-			rd.forward(request, response);
+			if(ac.isAdmin())
+				destination = "adminForm.jsp";
+			else
+				destination = "clientForm.jsp";
+			request.getSession().setAttribute("Account", ac);
+			response.sendRedirect(destination);
 		} else {
 			destination = "/loginForm.jsp";
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(destination);

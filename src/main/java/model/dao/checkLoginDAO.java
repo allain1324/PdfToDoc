@@ -26,7 +26,8 @@ public class checkLoginDAO {
 		    	 int idAccount = Integer.parseInt(rs.getString(1));
 		    	 String user = rs.getString(2);
 		    	 String pass = rs.getString(3);
-		    	 boolean admin = Boolean.valueOf(rs.getString(4));
+		    	 boolean admin = rs.getString(4).equals("1") ? true : false;
+		    	 System.out.println(admin);
 		    	 account ac = new account(idAccount,user,pass,admin);
 		    	 return ac;
 		     }else{
