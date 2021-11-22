@@ -195,7 +195,11 @@ form .execute {
 		${errorMessage}</div> -->
 	<header>
 		<div class="container">
-			<h2>Xin chào, <%=ac.getUsername() %> !</h2>
+			<h2>
+				Xin chào,
+				<%=ac.getUsername()%>
+				!
+			</h2>
 			<div id="userAccount">
 				<div id="iconUser">
 					<i class="fas fa-user"></i>
@@ -210,7 +214,61 @@ form .execute {
 	</header>
 	<!-- ${pageContext.request.contextPath}/uploadFile -->
 	<div id="mainForm" class="container">
-		<form method="post" action="" enctype="multipart/form-data" id="form1">
+		<form method="post"
+			action="${pageContext.request.contextPath}/uploadFileServlet"
+			enctype="multipart/form-data" id="form1">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" />
+			<div class="exportDiv">
+				<input type="file" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="#" class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
+		<form method="post"
+			action="${pageContext.request.contextPath}/uploadFileServlet"
+			enctype="multipart/form-data" id="form2">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" />
+			<div class="exportDiv">
+				<input type="file" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="#" class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
+				<form method="post"
+			action="${pageContext.request.contextPath}/uploadFileServlet"
+			enctype="multipart/form-data" id="form3">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" />
+			<div class="exportDiv">
+				<input type="file" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="#" class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
+				<form method="post"
+			action="${pageContext.request.contextPath}/uploadFileServlet"
+			enctype="multipart/form-data" id="form4">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" />
+			<div class="exportDiv">
+				<input type="file" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="#" class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
+				<form method="post"
+			action="${pageContext.request.contextPath}/uploadFileServlet"
+			enctype="multipart/form-data" id="form5">
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" />
 			<div class="exportDiv">
@@ -222,7 +280,7 @@ form .execute {
 			<input type="submit" value="Execute" class="execute" />
 		</form>
 	</div>
-	<button id="addNew">Add new +</button>
+	<button id="addNew" disabled = "true">Add new +</button>
 </body>
 <script>
     var addnew = document.getElementById("addNew");
@@ -234,13 +292,13 @@ form .execute {
         var count = document.querySelectorAll("form").length
         cln.id = "form" + (count + 1);
         formMain.appendChild(cln);
-        var main = document.getElementById("mainForm");
-        console.log(main)
+        if((count + 1) == 5)
+        	addNew.setAttribute("style","display:none");
+        
     })
     var buttonSubmits = document.querySelectorAll(".execute");
     buttonSubmits.forEach(buttonSubmit => {
         buttonSubmit.addEventListener('click', event =>{
-            event.preventDefault();
             console.log(event.target);
         })
     })
