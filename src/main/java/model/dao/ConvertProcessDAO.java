@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,9 +33,13 @@ import model.bean.*;
 public class ConvertProcessDAO
 {
 	private static DataAccessSupport das;
-	public Long getMaxAttachmentId() throws SQLException 
+	
+	public ConvertProcessDAO() {}
+	
+	public Long GenFileID() throws SQLException 
 	{
-		String sql = "Select max(a.id) from Attachment a";
+		// Generate id file moi bang cach tim max id cua file da upload
+		String sql = "Select max(a.iDRow) from fileinfor a";
 		PreparedStatement pstm = das.conn.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		if (rs.next()) 
@@ -45,21 +50,25 @@ public class ConvertProcessDAO
 		return 0L;
 	}
 
-	public void writeToDB(String fileName, InputStream fos) throws SQLException 
+	public void SaveFileToDB(String fileName, InputStream is_para, int idAccount, Date dateupload) throws SQLException 
 	{
 		try 
 		{
+			// Set limit cho mysql de tang kich thuoc file co the luu vao database
 			String querySetLimit = "SET GLOBAL max_allowed_packet=30000000;"; // 30 MB
 			Statement stSetLimit = das.conn.createStatement();
 			stSetLimit.execute(querySetLimit);
-			String sql = "Insert into Attachment(Id,File_Name,File_Data) " //
-					+ " values (?,?,?) ";
+			
+			// Luu file vao database
+			String sql = "Insert into fileinfor(iDRow,idAccount,dateUpload,nameFileUpload,nameFileDownload,fileDownload) values (?,?,?,?,?,?) ";
 			PreparedStatement pstm = das.conn.prepareStatement(sql);
-
-			Long id = this.getMaxAttachmentId() + 1;
+			Long id = this.GenFileID() + 1;
 			pstm.setLong(1, id);
-			pstm.setString(2, fileName);
-			pstm.setBinaryStream(3, fos);
+			pstm.setInt(2, idAccount);
+			pstm.setDate(3, dateupload);
+			pstm.setString(4, fileName);
+			pstm.setString(5, fileName);
+			pstm.setBinaryStream(6, is_para);
 			pstm.executeUpdate();
 		} 
 		catch (Exception e) {}

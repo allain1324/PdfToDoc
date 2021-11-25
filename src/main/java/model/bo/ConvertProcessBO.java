@@ -26,16 +26,18 @@ import javax.servlet.http.Part;
 import model.bean.*;
 import model.dao.*;
 
-public class ConvertProcessBO {
-	public String filepath;
-	public String filename;
-	public File fi;
-	public File fo;
-	public FileInputStream fis;
-	public BufferedInputStream bis;
-	public InputStream is;
-	public FileOutputStream fos;
-	public static ConvertProcessDAO CPDAO;
+public class ConvertProcessBO 
+{
+	private String filepath;
+	private String filename;
+	private File fi;
+	private File fo;
+	private FileInputStream fis;
+	private BufferedInputStream bis;
+	private InputStream is;
+	private FileOutputStream fos;
+	private static ConvertProcessDAO CPDAO;
+	
 	public String extractFileName(Part part) 
 	{
 		String contentDisp = part.getHeader("content-disposition");
@@ -53,15 +55,12 @@ public class ConvertProcessBO {
 	    return null;
 	}
 	
-	public void ConvertPdfToDoc()
-	{
-		filepath = "C:\\\\Users\\\\toand\\\\Desktop\\\\BÃ€I-Táº¬P-THá»°C-HÃ€NH-Láº¬P-TRÃŒNH-Máº NG_2.pdf";
-		filename = "BÃ€I-Táº¬P-THá»°C-HÃ€NH-Láº¬P-TRÃŒNH-Máº NG_2";
-		
+	public void ConvertPdfToDoc(String filename, InputStream is_para)
+	{	
 		try
 		{
 			//Tạo File input
-			this.fi = new File(this.filepath);			
+			this.fi = new File(this.filename);			
 			this.fis = new FileInputStream(this.fi);
 			this.bis = new BufferedInputStream(this.fis);
 			
@@ -89,11 +88,12 @@ public class ConvertProcessBO {
 	        PDDocument pdfDocument = null;
 	        pdfDocument = PDDocument.load(this.fi);
 	        this.fi.delete();
-	        if (pdfDocument == null) 
-	        {
-	        	//Tra ve form up file
-//	            return ResponseEntity.badRequest().body(new Response(null));
-	        }
+	        
+//	        if (pdfDocument == null) 
+//	        {
+//	        	//Tra ve form up file
+////	            return ResponseEntity.badRequest().body(new Response(null));
+//	        }
 	        PDFTextStripper pdfStripper = new PDFTextStripper();
 	        XWPFDocument document = new XWPFDocument();
 	        int no_of_pages = pdfDocument.getNumberOfPages();
@@ -117,7 +117,7 @@ public class ConvertProcessBO {
 	        }
 	        
 			//Tạo file output
-	        this.fo = new File("C://Users/toand/Desktop//" + filename + ".docx");
+	        this.fo = new File("filename" + ".docx");
 //			if (f1.createNewFile()) {
 //	            System.out.println("File is created!");
 //	        } else {
@@ -125,53 +125,63 @@ public class ConvertProcessBO {
 //	        }
 
 	        File doc_file = this.fo;
-	        FileOutputStream out = new FileOutputStream(doc_file);
-	        document.write(out);
+	        fos = new FileOutputStream(doc_file);
+	        document.write(fos);
 	        System.out.println(doc_file.getAbsolutePath());
 	        document.close();
 	        pdfDocument.close();
-	        out.close();
+	        fos.close();
 		}
 		catch (Exception e) {}
 	}
-
-	public void ReadWritebyByte(String fileName, InputStream is_para) 
+	public void ConvertProcess(String filename, InputStream is_para)
 	{
-		try 
+		try
 		{
-//			File f = new File("/home/alain/Downloads/test/sample.pdf");
-//			FileInputStream fis = new FileInputStream(f);
-//			BufferedInputStream bis = new BufferedInputStream(fis);
-			
-			System.out.println(fileName);
-			// String filename = fileName.split(".")[0];
-			// System.out.println(fileName);
-			File f1 = new File("C://Users/toand/Desktop//" + fileName + ".docx");
-			if (f1.createNewFile()) 
-			{
-				System.out.println("File is created!");
-			} 
-			else 
-			{
-				System.out.println("File already exists.");
-			}
-			FileOutputStream fos = new FileOutputStream(f1);
-			BufferedOutputStream bos = new BufferedOutputStream(fos);
-			int c;
-			while ((c = fis.read()) != -1) 
-			{
-				// System.out.println(c);
-				fos.write(c);
-			}
-			String filename = fileName + ".docx";
-			System.out.println(filename);
-			InputStream is = new FileInputStream(f1);
-			CPDAO.writeToDB(filename, is);
-		} 
-		catch (Exception e) 
-		{
-			// TODO: handle exception
-			System.out.println(e);
+			this.ConvertPdfToDoc(filename, is_para);
+			java.util.Date utilDate = new java.util.Date();
+			CPDAO.SaveFileToDB(filename, is_para, 0, new java.sql.Date(utilDate.getTime()));
 		}
+		catch (Exception e) {}
+	}
+	public void ReadWritebyByte(String fileName, InputStream is_para, int idAccount) 
+	{
+//		try 
+//		{
+////			File f = new File("/home/alain/Downloads/test/sample.pdf");
+////			FileInputStream fis = new FileInputStream(f);
+////			BufferedInputStream bis = new BufferedInputStream(fis);
+//			
+//			System.out.println(fileName);
+//			// String filename = fileName.split(".")[0];
+//			// System.out.println(fileName);
+//			File f1 = new File("C://Users/toand/Desktop//" + fileName + ".docx");
+//			if (f1.createNewFile()) 
+//			{
+//				System.out.println("File is created!");
+//			} 
+//			else 
+//			{
+//				System.out.println("File already exists.");
+//			}
+//			FileOutputStream fos = new FileOutputStream(f1);
+//			BufferedOutputStream bos = new BufferedOutputStream(fos);
+//			int c;
+//			while ((c = fis.read()) != -1) 
+//			{
+//				// System.out.println(c);
+//				fos.write(c);
+//			}
+//			String filename = fileName + ".docx";
+//			System.out.println(filename);
+//			InputStream is = new FileInputStream(f1);
+//			java.util.Date utilDate = new java.util.Date();
+//			CPDAO.SaveFileToDB(filename, is, idAccount, new java.sql.Date(utilDate.getDate()));
+//		} 
+//		catch (Exception e) 
+//		{
+//			// TODO: handle exception
+//			System.out.println(e);
+//		}
 	}
 }

@@ -66,7 +66,7 @@ public class UploadToDBServlet extends HttpServlet
                    InputStream is = part.getInputStream();
                    
                 // Chuyen doi pdf -> doc & ghi du lieu noi dung vao database
-                   CPBO.ReadWritebyByte(fileName, is);
+                   CPBO.ConvertProcess(fileName, is);
                }
            }
            das.conn.commit();
