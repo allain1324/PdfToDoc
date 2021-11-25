@@ -6,17 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+
 import java.util.ArrayList;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class DataAccessSupport {
-	public static String url = "jdbc:mysql://localhost:3306/db_ltmang";
+	private static String url = "jdbc:mysql://localhost:3306/db_ltmang";
 	private static String user = "root";
 	private static String password = "";
-	public static Connection conn = null;
-	public static PreparedStatement ps = null;
-	public static ResultSet rs = null;
+	public Connection conn;
+	public PreparedStatement ps;
+	public ResultSet rs;
+	
+	public DataAccessSupport() {} 
 	
 	public Connection getConnection() throws SQLException 
 	{
@@ -31,7 +32,17 @@ public class DataAccessSupport {
 			conn = this.getConnection();
 		}
 		catch (Exception e) {}
-		
 	}
-	public void DataAccessSupport() {}
+	
+	public void CloseConnection() 
+	{
+		try 
+		{
+			if (this.conn != null) 
+			{
+				this.conn.close();
+			}
+		} 
+		catch (Exception e) {}
+	}
 }
