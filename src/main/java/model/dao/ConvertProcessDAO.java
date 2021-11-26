@@ -36,6 +36,22 @@ public class ConvertProcessDAO
 	
 	public ConvertProcessDAO() {}
 	
+	public void querySetLimit() 
+	{
+		try
+		{
+			// Set limit cho mysql de tang kich thuoc file co the luu vao database
+			String querySetLimit = "SET GLOBAL max_allowed_packet=30000000;"; // 30 MB
+			Statement stSetLimit = das.conn.createStatement();
+			stSetLimit.execute(querySetLimit);
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("querySetLimit function throws exception!");
+		}
+	}
+	
 	public Long GenFileID() throws SQLException 
 	{
 		// Generate id file moi bang cach tim max id cua file da upload
@@ -54,12 +70,14 @@ public class ConvertProcessDAO
 	{
 		try 
 		{
-			// Set limit cho mysql de tang kich thuoc file co the luu vao database
-			String querySetLimit = "SET GLOBAL max_allowed_packet=30000000;"; // 30 MB
-			Statement stSetLimit = das.conn.createStatement();
-			stSetLimit.execute(querySetLimit);
+			// Ket noi JDBC
+			das.LoadJDBC();
+	    	
+			// Set limit cho mysql
+			querySetLimit();
 			
 			// Luu file vao database
+			das.conn.commit();
 			String sql = "Insert into fileinfor(iDRow,idAccount,dateUpload,nameFileUpload,nameFileDownload,fileDownload) values (?,?,?,?,?,?) ";
 			PreparedStatement pstm = das.conn.prepareStatement(sql);
 			Long id = this.GenFileID() + 1;
@@ -70,7 +88,13 @@ public class ConvertProcessDAO
 			pstm.setString(5, fileName);
 			pstm.setBinaryStream(6, is_para);
 			pstm.executeUpdate();
+			das.conn.commit();
+			das.CloseConnection();
 		} 
-		catch (Exception e) {}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("SaveFileToDB function throws exception!");
+		}
 	}
 }

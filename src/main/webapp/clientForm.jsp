@@ -216,7 +216,7 @@ form .execute {
 	<!-- ${pageContext.request.contextPath}/uploadFile -->
 	<div id="mainForm" class="container">
 		<form method="post"
-			action="${pageContext.request.contextPath}/uploadToDBServlet"
+			action="${pageContext.request.contextPath}/UploadToDBServlet"
 			enctype="multipart/form-data" id="form1">
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input1"/>

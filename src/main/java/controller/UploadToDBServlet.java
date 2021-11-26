@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import model.bean.DataAccessSupport;
+import model.bean.*;
 import model.bo.*;
 
-@WebServlet("/uploadToDB")
+@WebServlet("/UploadToDBServlet")
 @MultipartConfig(	fileSizeThreshold = 1024 * 1024 * 2, // 2MB
        				maxFileSize = 1024 * 1024 * 10, // 10MB
        				maxRequestSize = 1024 * 1024 * 50) // 50MB
@@ -46,30 +46,32 @@ public class UploadToDBServlet extends HttpServlet
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
    {
-	   DataAccessSupport das = new DataAccessSupport();
 	   ConvertProcessBO CPBO = new ConvertProcessBO();
 	   try 
 	   {
-           // Ket noi JDBC
-    	   das.LoadJDBC();
-    	   das.conn.setAutoCommit(false);
-//           conn = ConnectionUtils.getMyConnection();
-//           conn.setAutoCommit(false);
-
+		   System.out.println("Upload to DB Servlet");
+    	   
+    	   // Get idAccount
+    	   account ac = (account) request.getSession().getAttribute("Account");
+    	   int idAccount = ac.getIdAccount();
+    	   System.out.println("Get idAccount:" + idAccount);
+    	   
            // Duyet qua file upload
            for (Part part : request.getParts()) 
            {
+        	   String filePath = request.getParameter("file");
                String fileName = CPBO.extractFileName(part);
+               System.out.println("fileName: " + fileName);
+               System.out.println("filePath: " + filePath);
                if (fileName != null && fileName.length() > 0) 
                {
-                   // Get du lieu noi dung file.
-                   InputStream is = part.getInputStream();
-                   
-                // Chuyen doi pdf -> doc & ghi du lieu noi dung vao database
-                   CPBO.ConvertProcess(fileName, is);
+					// Get du lieu noi dung file.
+					InputStream is = part.getInputStream();
+
+					// Chuyen doi pdf -> doc & ghi du lieu noi dung vao database
+					CPBO.ConvertProcess(fileName, is, idAccount);
                }
            }
-           das.conn.commit();
            
            // Tra ve response de thong bao upload thanh cong.
            response.sendRedirect(request.getContextPath() + "/clientForm.jsp");
@@ -81,9 +83,5 @@ public class UploadToDBServlet extends HttpServlet
            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/clientForm.jsp");
            dispatcher.forward(request, response);
        } 
-	   finally 
-	   {
-           das.CloseConnection();
-       }
    } 
 }

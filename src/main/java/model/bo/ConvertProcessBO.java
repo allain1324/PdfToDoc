@@ -3,6 +3,7 @@ package model.bo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,6 +18,8 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.ooxml.POIXMLDocumentPart;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -49,31 +52,51 @@ public class ConvertProcessBO
 	    		String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
 	            clientFileName = clientFileName.replace("\\", "/");
 	            int i = clientFileName.lastIndexOf('/');
-	            return clientFileName.substring(i + 1);
+	            String res = clientFileName.substring(i + 1);
+	            System.out.println("extractFileName function: " + res);
+	            return res;
 	        }
 	    }
 	    return null;
 	}
 	
-	public void ConvertPdfToDoc(String filename, InputStream is_para)
+	public void ConvertPdfToDoc(String filename, InputStream is_para, int idAccount)
 	{	
 		try
 		{
 			//Tạo File input
-			this.fi = new File(this.filename);			
-			this.fis = new FileInputStream(this.fi);
-			this.bis = new BufferedInputStream(this.fis);
+			this.fi = new File("C:\\InputFile\\" + filename);
+			this.fi.createNewFile();
+//			this.fi.mkdir();
+			System.out.println("tạo file input");
+			System.out.println(this.fi);
+//			if (this.fi.createNewFile()) 
+//			{
+//				System.out.println("File created: " + this.fi.getName());
+//			} 
+//			else 
+//			{
+//				System.out.println("File already exists.");
+//			}
+//			this.fis = new FileInputStream(this.fi);
+//			System.out.println("tạo file input stream");
+//			this.bis = new BufferedInputStream(this.fis);
+//			System.out.println("tạo buffered input stream");
 			
 			//Tạo fileoutputstream
-			this.fos = new FileOutputStream(this.fi);
+			this.fo = new File("C:\\OutputFile\\" + filename + ".docx");
+			this.fo.createNewFile();
+			this.fos = new FileOutputStream(this.fo);
+			System.out.println("tạo file output stream");
 			
 			//Convert
-			int len;
-	        byte[] buffer = new byte[1024];
-	        while (-1 != (len = this.is.read(buffer))) 
-	        {
-	        	this.fos.write(buffer, 0, len);
-	        }
+//			int len;
+//	        byte[] buffer = new byte[1024];
+//	        while (-1 != (len = is_para.read(buffer))) 
+//	        {
+//	        	this.fos.write(buffer, 0, len);
+//	        }
+//	        System.out.println("write buffer");
 //	        try {
 //	            Files.copy(is, fi.toPath());
 //	        } catch (Exception e) {
@@ -82,12 +105,14 @@ public class ConvertProcessBO
 //	            fis.close();
 //	        }
 	        
-	        Files.copy(this.is, this.fi.toPath());
-	        this.fis.close();
+//	        Files.copy(is_para, this.fo.toPath());
+//	        this.fis.close();
+//	        System.out.println("file copy input stream");
 	        
 	        PDDocument pdfDocument = null;
-	        pdfDocument = PDDocument.load(this.fi);
-	        this.fi.delete();
+	        pdfDocument = PDDocument.load(is_para);
+//	        this.fi.delete();
+//	        System.out.println("this.fi.delete();");
 	        
 //	        if (pdfDocument == null) 
 //	        {
@@ -117,30 +142,37 @@ public class ConvertProcessBO
 	        }
 	        
 			//Tạo file output
-	        this.fo = new File("filename" + ".docx");
+//	        this.fo = new File("C:\\OutputFile\\" + "filename" + ".docx");
 //			if (f1.createNewFile()) {
 //	            System.out.println("File is created!");
 //	        } else {
 //	            System.out.println("File already exists.");
 //	        }
 
-	        File doc_file = this.fo;
-	        fos = new FileOutputStream(doc_file);
-	        document.write(fos);
-	        System.out.println(doc_file.getAbsolutePath());
+//	        File doc_file = this.fo;
+//	        fos = new FileOutputStream();
+//	        IOUtils.copyLarge(is_para, this.fos);
+	        document.write(this.fos);
+//	        System.out.println(doc_file.getAbsolutePath());
 	        document.close();
 	        pdfDocument.close();
 	        fos.close();
+	        System.out.println("Finish Convert Pdf to Doc");
 		}
-		catch (Exception e) {}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.out.println("Exception Convert pdf to doc");
+		}
 	}
-	public void ConvertProcess(String filename, InputStream is_para)
+	public void ConvertProcess(String filename, InputStream is_para, int idAccount)
 	{
 		try
 		{
-			this.ConvertPdfToDoc(filename, is_para);
+			System.out.println("Convert Process BO");
+			this.ConvertPdfToDoc(filename, is_para, idAccount);
 			java.util.Date utilDate = new java.util.Date();
-			CPDAO.SaveFileToDB(filename, is_para, 0, new java.sql.Date(utilDate.getTime()));
+			CPDAO.SaveFileToDB(filename, this.is, idAccount, new java.sql.Date(utilDate.getTime()));
 		}
 		catch (Exception e) {}
 	}
