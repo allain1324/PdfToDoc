@@ -66,8 +66,9 @@ public class ConvertProcessDAO
 		return 0;
 	}
 
-	public void SaveFileToDB(String fileName, InputStream is_para, int idAccount, Date dateupload) throws SQLException 
+	public int SaveFileToDB(String fileName, InputStream is_para, int idAccount, Date dateupload) throws SQLException 
 	{
+		int id = 0;
 		try 
 		{
 			das = new DataAccessSupport();
@@ -85,7 +86,7 @@ public class ConvertProcessDAO
 			String sql = "Insert into fileinfor(iDRow,idAccount,dateUpload,nameFileUpload,nameFileDownload,fileDownload) values (?,?,?,?,?,?) ";
 			PreparedStatement pstm = das.conn.prepareStatement(sql);
 			// Generate id file moi bang cach tim max id cua file da upload
-			int id = this.GetMaxFileID() + 1;
+			id = this.GetMaxFileID() + 1;
 			pstm.setInt(1, id);
 			pstm.setInt(2, idAccount);
 			pstm.setDate(3, dateupload);
@@ -103,5 +104,6 @@ public class ConvertProcessDAO
 			e.printStackTrace();
 			System.out.println("SaveFileToDB function throws exception!");
 		}
+		return id;
 	}
 }

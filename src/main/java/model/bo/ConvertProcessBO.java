@@ -166,7 +166,7 @@ public class ConvertProcessBO
 			System.out.println("Exception Convert pdf to doc");
 		}
 	}
-	public void ConvertProcess(String filename, InputStream is_para, int idAccount)
+	public int ConvertProcess(String filename, InputStream is_para, int idAccount)
 	{
 		try
 		{
@@ -177,9 +177,10 @@ public class ConvertProcessBO
 			System.out.println("utilDate: " + utilDate);
 //			IOUtils.copyLarge(this.fos, this.is);
 			this.is = FileUtils.openInputStream(this.fo);
-			CPDAO.SaveFileToDB(filename, this.is, idAccount, new java.sql.Date(utilDate.getTime()));
+			return CPDAO.SaveFileToDB(filename, this.is, idAccount, new java.sql.Date(utilDate.getTime()));
 		}
 		catch (Exception e) {}
+		return 0;
 	}
 	public void ReadWritebyByte(String fileName, InputStream is_para, int idAccount) 
 	{

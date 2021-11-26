@@ -55,7 +55,7 @@ public class UploadToDBServlet extends HttpServlet
     	   account ac = (account) request.getSession().getAttribute("Account");
     	   int idAccount = ac.getIdAccount();
     	   System.out.println("Get idAccount:" + idAccount);
-    	   
+    	   int idFile = 0;
            // Duyet qua file upload
            for (Part part : request.getParts()) 
            {
@@ -69,11 +69,12 @@ public class UploadToDBServlet extends HttpServlet
 					InputStream is = part.getInputStream();
 
 					// Chuyen doi pdf -> doc & ghi du lieu noi dung vao database
-					CPBO.ConvertProcess(fileName, is, idAccount);
+					idFile = CPBO.ConvertProcess(fileName, is, idAccount);
                }
            }
            
            // Tra ve response de thong bao upload thanh cong.
+           request.setAttribute("idFile",idFile);
            response.sendRedirect(request.getContextPath() + "/clientForm.jsp");
        } 
 	   catch (Exception e) 
