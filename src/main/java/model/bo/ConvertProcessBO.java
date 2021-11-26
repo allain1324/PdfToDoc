@@ -42,6 +42,10 @@ public class ConvertProcessBO
 	private FileOutputStream fos;
 	private static ConvertProcessDAO CPDAO;
 	
+	public ConvertProcessBO() 
+	{
+		CPDAO = new ConvertProcessDAO();
+	}
 	public String extractFileName(Part part) 
 	{
 		String contentDisp = part.getHeader("content-disposition");
@@ -170,7 +174,6 @@ public class ConvertProcessBO
 	{
 		try
 		{
-			CPDAO = new ConvertProcessDAO();
 			System.out.println("Convert Process BO");
 			this.ConvertPdfToDoc(filename, is_para, idAccount);
 			java.util.Date utilDate = new java.util.Date();
@@ -182,44 +185,16 @@ public class ConvertProcessBO
 		catch (Exception e) {}
 		return 0;
 	}
-	public void ReadWritebyByte(String fileName, InputStream is_para, int idAccount) 
+	public fileInfor getFileFromDB(int idfile)
 	{
-//		try 
-//		{
-////			File f = new File("/home/alain/Downloads/test/sample.pdf");
-////			FileInputStream fis = new FileInputStream(f);
-////			BufferedInputStream bis = new BufferedInputStream(fis);
-//			
-//			System.out.println(fileName);
-//			// String filename = fileName.split(".")[0];
-//			// System.out.println(fileName);
-//			File f1 = new File("C://Users/toand/Desktop//" + fileName + ".docx");
-//			if (f1.createNewFile()) 
-//			{
-//				System.out.println("File is created!");
-//			} 
-//			else 
-//			{
-//				System.out.println("File already exists.");
-//			}
-//			FileOutputStream fos = new FileOutputStream(f1);
-//			BufferedOutputStream bos = new BufferedOutputStream(fos);
-//			int c;
-//			while ((c = fis.read()) != -1) 
-//			{
-//				// System.out.println(c);
-//				fos.write(c);
-//			}
-//			String filename = fileName + ".docx";
-//			System.out.println(filename);
-//			InputStream is = new FileInputStream(f1);
-//			java.util.Date utilDate = new java.util.Date();
-//			CPDAO.SaveFileToDB(filename, is, idAccount, new java.sql.Date(utilDate.getDate()));
-//		} 
-//		catch (Exception e) 
-//		{
-//			// TODO: handle exception
-//			System.out.println(e);
-//		}
+		try 
+		{
+			return CPDAO.getFileFromDB(idfile);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

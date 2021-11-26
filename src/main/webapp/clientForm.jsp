@@ -18,12 +18,10 @@
 	text-decoration: none;
 	list-style: none;
 }
-
 body, html {
 	height: 100%;
 	width: 100%;
 }
-
 body {
 	height: 100%;
 	width: 100%;
@@ -34,12 +32,10 @@ body {
 	overflow-x: hidden;
 	margin-bottom: 30px
 }
-
 .container {
 	width: 1320px;
 	margin: 0px auto;
 }
-
 header {
 	width: 100%;
 	height: 50px;
@@ -49,13 +45,11 @@ header {
 	margin-bottom: 100px;
 	background-color: #edf0f3;
 }
-
 header>div {
 	display: flex;
 	justify-content: space-between;
 	height: 50px;
 }
-
 header div .fa-user {
 	width: 40px;
 	height: 40px;
@@ -64,12 +58,10 @@ header div .fa-user {
 	padding-top: 9px;
 	padding-left: 13px;
 }
-
 #userAccount {
 	margin-top: 9px;
 	position: relative;
 }
-
 #userAccountInfor {
 	visibility: hidden;
 	opacity: 0;
@@ -82,28 +74,23 @@ header div .fa-user {
 	border: 1px solid black;
 	border-radius: 3px;
 }
-
 #iconUser:hover {
 	background-color: aliceblue;
 	cursor: pointer;
 }
-
 #iconUser:hover>#userAccountInfor {
 	visibility: visible;
 	opacity: 1;
 }
-
 #userAccountInfor>li {
 	height: 50px;
 	padding: 5px 3px;
 	text-align: center;
 	border-bottom: 1px solid black;
 }
-
 #userAccountInfor>li:hover {
 	background-color: #d8dbdd;
 }
-
 #userAccountInfor>li>a {
 	display: block;
 	height: 50px;
@@ -112,13 +99,11 @@ header div .fa-user {
 	line-height: 50px;
 	color: black;
 }
-
 h2 {
 	display: contents;
 	text-align: center;
 	line-height: 46px;
 }
-
 form {
 	width: 900px;
 	margin-left: auto;
@@ -128,26 +113,22 @@ form {
 	justify-content: space-between;
 	margin-top: 15px;
 }
-
 form .importFile {
 	padding: 0px 2px;
 	margin: 3px;
 	width: 400px;
 	border: 1px solid black;
 }
-
 .exportDiv {
 	margin: 3px;
 	width: 400px;
 	position: relative;
 }
-
 form .exportFile {
 	padding: 0px 2px;
 	width: 100%;
 	border: 1px solid black;
 }
-
 .linkDownload {
 	width: 23px;
 	height: 23px;
@@ -155,14 +136,12 @@ form .exportFile {
 	top: 4px;
 	position: absolute;
 }
-
 .download {
 	width: 100%;
 	height: 100%;
 	color: black;
 	font-size: 22px;
 }
-
 form .execute {
 	margin: 3px;
 	padding-top: 3px;
@@ -172,7 +151,6 @@ form .execute {
 	cursor: pointer;
 	border: 1px solid black;
 }
-
 #addNew {
 	display: block;
 	width: 100px;
@@ -222,7 +200,7 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input1"/>
 			<div class="exportDiv">
 				<input type="file" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="#" class="linkDownload"> <i
+					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>

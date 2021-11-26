@@ -21,6 +21,7 @@ import org.apache.poi.ooxml.POIXMLDocumentPart;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -71,9 +72,9 @@ public class ConvertProcessDAO
 		int id = 0;
 		try 
 		{
+			// Ket noi JDBC
 			das = new DataAccessSupport();
 			System.out.println("Save file to DB");
-			// Ket noi JDBC
 			das.LoadJDBC();
 	    	System.out.println("Ket noi jdbc");
 	    	
@@ -105,5 +106,30 @@ public class ConvertProcessDAO
 			System.out.println("SaveFileToDB function throws exception!");
 		}
 		return id;
+	}
+	public fileInfor getFileFromDB(int idfile) throws SQLException 
+	{
+		// Ket noi JDBC
+		das = new DataAccessSupport();
+		System.out.println("Save file to DB");
+		das.LoadJDBC();
+    	System.out.println("Ket noi jdbc");
+    	
+    	// Get file tu database
+		String sql = "Select a.idAccount, a.dateUpload, a.nameFileDownload, a.fileDownload from fileinfor a where a.iDRow = ?";
+		PreparedStatement pstm = das.conn.prepareStatement(sql);
+		pstm.setInt(1, idfile);
+		ResultSet rs = pstm.executeQuery();
+		if (rs.next()) 
+		{
+			int idAccount = rs.getInt("idAccount");
+			Date dateUpload = rs.getDate("dateUpload");
+			String fileName = rs.getString("nameFileDownload");
+			Blob fileData = rs.getBlob("fileDownload");
+			das.CloseConnection();
+			return new fileInfor(idfile,idAccount,dateUpload,fileName,fileData);
+		}
+		das.CloseConnection();
+		return null;
 	}
 }

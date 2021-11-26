@@ -1,11 +1,15 @@
 package model.bean;
-import java.time.LocalDate;
+
+import java.sql.Blob;
+import java.sql.Date;
 
 public class fileInfor {
 	private int iD;
 	private int idAccount;
-	private LocalDate dateUpload;
-	private String linkFile;
+	private Date dateUpload;
+	private String filename;
+	private Blob fileData;
+	
 	public int getiD() {
 		return iD;
 	}
@@ -18,23 +22,30 @@ public class fileInfor {
 	public void setIdAccount(int idAccount) {
 		this.idAccount = idAccount;
 	}
-	public LocalDate getDateUpload() {
+	public Date getDateUpload() {
 		return dateUpload;
 	}
-	public void setDateUpload(LocalDate dateUpload) {
+	public void setDateUpload(Date dateUpload) {
 		this.dateUpload = dateUpload;
 	}
-	public String getLinkFile() {
-		return linkFile;
+	public String getfilename() {
+		return filename;
 	}
-	public void setLinkFile(String linkFile) {
-		this.linkFile = linkFile;
+	public void setfilename(String filename) {
+		this.filename = filename;
+	}
+	public Blob getfileData() {
+		return this.fileData;
+	}
+	public void setfileData(Blob fileData) {
+		this.fileData = fileData;
 	}
 	
-	public fileInfor(int id,int idAcc, LocalDate date, String link) {
+	public fileInfor(int id,int idAcc, Date date, String filename, Blob fileData) {
 		this.iD = id;
 		this.idAccount = idAcc;
 		this.dateUpload = date;
-		this.linkFile = link;
+		this.filename = filename;
+		this.fileData = fileData;
 	}
 }
