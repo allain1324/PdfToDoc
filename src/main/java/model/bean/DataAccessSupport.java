@@ -29,7 +29,7 @@ public class DataAccessSupport {
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = this.getConnection();
+			this.conn = this.getConnection();
 		}
 		catch (Exception e) {}
 	}

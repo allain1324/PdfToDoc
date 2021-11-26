@@ -52,43 +52,50 @@ public class ConvertProcessDAO
 		}
 	}
 	
-	public Long GenFileID() throws SQLException 
+	public int GetMaxFileID() throws SQLException 
 	{
-		// Generate id file moi bang cach tim max id cua file da upload
+		// tim max id cua file da upload
 		String sql = "Select max(a.iDRow) from fileinfor a";
 		PreparedStatement pstm = das.conn.prepareStatement(sql);
 		ResultSet rs = pstm.executeQuery();
 		if (rs.next()) 
 		{
-			long max = rs.getLong(1);
+			int max = rs.getInt(1);
 			return max;
 		}
-		return 0L;
+		return 0;
 	}
 
 	public void SaveFileToDB(String fileName, InputStream is_para, int idAccount, Date dateupload) throws SQLException 
 	{
 		try 
 		{
+			das = new DataAccessSupport();
+			System.out.println("Save file to DB");
 			// Ket noi JDBC
 			das.LoadJDBC();
+	    	System.out.println("Ket noi jdbc");
 	    	
 			// Set limit cho mysql
 			querySetLimit();
+			System.out.println("Set limit cho mysql");
 			
 			// Luu file vao database
-			das.conn.commit();
+//			das.conn.commit();
 			String sql = "Insert into fileinfor(iDRow,idAccount,dateUpload,nameFileUpload,nameFileDownload,fileDownload) values (?,?,?,?,?,?) ";
 			PreparedStatement pstm = das.conn.prepareStatement(sql);
-			Long id = this.GenFileID() + 1;
-			pstm.setLong(1, id);
+			// Generate id file moi bang cach tim max id cua file da upload
+			int id = this.GetMaxFileID() + 1;
+			pstm.setInt(1, id);
 			pstm.setInt(2, idAccount);
 			pstm.setDate(3, dateupload);
 			pstm.setString(4, fileName);
 			pstm.setString(5, fileName);
+			
+//			InputStream is = new InputStream(new File(is_para));
 			pstm.setBinaryStream(6, is_para);
 			pstm.executeUpdate();
-			das.conn.commit();
+//			das.conn.commit();
 			das.CloseConnection();
 		} 
 		catch (Exception e) 

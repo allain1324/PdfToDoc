@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,7 +21,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-
+import org.apache.fontbox.ttf.CmapSubtable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -156,7 +157,7 @@ public class ConvertProcessBO
 //	        System.out.println(doc_file.getAbsolutePath());
 	        document.close();
 	        pdfDocument.close();
-	        fos.close();
+//	        this.fos.close();
 	        System.out.println("Finish Convert Pdf to Doc");
 		}
 		catch (Exception e) 
@@ -169,9 +170,13 @@ public class ConvertProcessBO
 	{
 		try
 		{
+			CPDAO = new ConvertProcessDAO();
 			System.out.println("Convert Process BO");
 			this.ConvertPdfToDoc(filename, is_para, idAccount);
 			java.util.Date utilDate = new java.util.Date();
+			System.out.println("utilDate: " + utilDate);
+//			IOUtils.copyLarge(this.fos, this.is);
+			this.is = FileUtils.openInputStream(this.fo);
 			CPDAO.SaveFileToDB(filename, this.is, idAccount, new java.sql.Date(utilDate.getTime()));
 		}
 		catch (Exception e) {}
