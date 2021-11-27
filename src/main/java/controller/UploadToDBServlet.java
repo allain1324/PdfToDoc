@@ -74,7 +74,8 @@ public class UploadToDBServlet extends HttpServlet
            }
            
            // Tra ve response de thong bao upload thanh cong.
-           request.setAttribute("idFile",idFile);
+           request.getSession().setAttribute("idFile",idFile);
+           System.out.println("idFile: " + idFile);
            response.sendRedirect(request.getContextPath() + "/clientForm.jsp");
        } 
 	   catch (Exception e) 

@@ -215,22 +215,24 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input1"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
+					/> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getAttribute("idFile") %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
+			<% System.out.println("idFile response:" + request.getAttribute("idFile")); %>
 		</form>
 				<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form2">
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input2"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
+					/> <a href= "http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getSession().getAttribute("idFile") %>"  class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
+			<% System.out.println("idFile response:" + request.getSession().getAttribute("idFile")); %>
 		</form>
 
 		<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form3">
@@ -238,11 +240,12 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input3"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
+					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getAttribute("idFile") %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
+			<% System.out.println("idFile response:" + request.getSession().getAttribute("idFile")); %>
 		</form>
 	</div>
 	<button id="addNew" disabled="true">Add new +</button>

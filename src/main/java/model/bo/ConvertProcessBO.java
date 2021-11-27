@@ -174,6 +174,16 @@ public class ConvertProcessBO
 	{
 		try
 		{
+			File theDir1 = new File("C:\\InputFile\\");
+			File theDir2 = new File("C:\\OutputFile\\");
+			if (!theDir1.exists()){
+			    theDir1.mkdirs();
+			    System.out.println("theDir1.mkdirs();");
+			}
+			if (!theDir2.exists()){
+			    theDir2.mkdirs();
+			    System.out.println("theDir2.mkdirs();");
+			}
 			System.out.println("Convert Process BO");
 			this.ConvertPdfToDoc(filename, is_para, idAccount);
 			java.util.Date utilDate = new java.util.Date();

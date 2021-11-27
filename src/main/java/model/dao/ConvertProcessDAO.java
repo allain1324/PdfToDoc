@@ -92,7 +92,7 @@ public class ConvertProcessDAO
 			pstm.setInt(2, idAccount);
 			pstm.setDate(3, dateupload);
 			pstm.setString(4, fileName);
-			pstm.setString(5, fileName);
+			pstm.setString(5, fileName + ".docx");
 			
 //			InputStream is = new InputStream(new File(is_para));
 			pstm.setBinaryStream(6, is_para);
