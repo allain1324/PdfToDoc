@@ -26,11 +26,12 @@ body {
 	height: 100%;
 	width: 100%;
 	background-image:
-		url("./image/bg_clientForm.jpg");
+		url("https://lh3.googleusercontent.com/proxy/5EzEvGy3m3xWEsIkhEjvwBE15he9e17FsL7iI_yWRQ9At8XH7_rPuLLxUKmlfEJERgJlKDGS-gdTxe_9CFIVePCxkqUjAkhWk761DAAdEkvvurLOJwXxs6poJrO6-H6IUZM8tMO5bbnmsRXD");
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow-x: hidden;
-	margin-bottom: 30px
+	margin-bottom: 30px;
+	position: relative;
 }
 .container {
 	width: 1320px;
@@ -113,6 +114,16 @@ form {
 	justify-content: space-between;
 	margin-top: 15px;
 }
+
+#mask {
+	display: none;
+	width: 100%;
+	height: 100%;
+	margin-top: 150px;
+	background-color: rgba(255,255,255,0.1);
+	position: absolute;
+	z-index: 10000;
+}
 form .importFile {
 	padding: 0px 2px;
 	margin: 3px;
@@ -123,12 +134,14 @@ form .importFile {
 	margin: 3px;
 	width: 400px;
 	position: relative;
+	z-index: 0;
 }
 form .exportFile {
 	padding: 0px 2px;
 	width: 100%;
 	border: 1px solid black;
 	height: 100%;
+	z-index: 0;
 }
 .linkDownload {
 	width: 23px;
@@ -173,6 +186,7 @@ form .execute {
 
 	<!-- <div style="padding: 5px; color: red; font-style: italic;">
 		${errorMessage}</div> -->
+	<div id="mask"></div>
 	<header>
 		<div class="container">
 			<h2>
@@ -207,8 +221,31 @@ form .execute {
 			</div>
 			<input type="submit" value="Execute" class="execute" />
 		</form>
+				<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form2">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" id="input2"/>
+			<div class="exportDiv">
+				<input type="text" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
+
+		<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form3">
+			<input type="file" name="file" class="importFile"
+				accept="application/pdf" title="Choose file to upload" id="input3"/>
+			<div class="exportDiv">
+				<input type="text" name="file" class="exportFile" disabled="true"
+					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
+					class="fas fa-download" class="download"></i>
+				</a>
+			</div>
+			<input type="submit" value="Execute" class="execute" />
+		</form>
 	</div>
-	<button id="addNew">Add new +</button>
+	<button id="addNew" disabled="true">Add new +</button>
 </body>
 <script>
     var addnew = document.getElementById("addNew");
@@ -222,22 +259,19 @@ form .execute {
         formMain.appendChild(cln);
         
     })
+    var buttonSubmits = document.querySelectorAll(".execute");
+    buttonSubmits.forEach(buttonSubmit => {
+        buttonSubmit.addEventListener('click', event =>{
+            console.log(event.target);
+        })
+    })
     
     var disable = true;
     var formSubmits = document.querySelectorAll("form")
     formSubmits.forEach(formSubmit =>{
         formSubmit.addEventListener("submit", event =>{
-        	event.preventDefault();
-        	var form = document.getElementById(event.target.id);
-            var formImport = document.getElementById(event.target.id)[0];
-            var linkDown = form.querySelector("a")
-            var butExe = form[2]
-            if(disable == true){
-                formImport.setAttribute("disabled", disable);
-                butExe.setAttribute("disabled", disable);
-                butExe.setAttribute("value", "Processing");
-                linkDown.setAttribute("href","#");
-            }
+			var mask = document.querySelector("#mask");
+			mask.style.display = "block";
         })
     })
     
