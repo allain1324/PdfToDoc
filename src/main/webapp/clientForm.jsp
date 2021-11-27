@@ -26,7 +26,7 @@ body {
 	height: 100%;
 	width: 100%;
 	background-image:
-		url("https://lh3.googleusercontent.com/proxy/5EzEvGy3m3xWEsIkhEjvwBE15he9e17FsL7iI_yWRQ9At8XH7_rPuLLxUKmlfEJERgJlKDGS-gdTxe_9CFIVePCxkqUjAkhWk761DAAdEkvvurLOJwXxs6poJrO6-H6IUZM8tMO5bbnmsRXD");
+		url("./image/bg_clientForm.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	overflow-x: hidden;
@@ -128,6 +128,7 @@ form .exportFile {
 	padding: 0px 2px;
 	width: 100%;
 	border: 1px solid black;
+	height: 100%;
 }
 .linkDownload {
 	width: 23px;
@@ -199,7 +200,7 @@ form .execute {
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input1"/>
 			<div class="exportDiv">
-				<input type="file" name="file" class="exportFile" disabled="true"
+				<input type="text" name="file" class="exportFile" disabled="true"
 					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=" + request.getAttribute("idFile") class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
@@ -221,10 +222,22 @@ form .execute {
         formMain.appendChild(cln);
         
     })
-    var buttonSubmits = document.querySelectorAll(".execute");
-    buttonSubmits.forEach(buttonSubmit => {
-        buttonSubmit.addEventListener('click', event =>{
-            console.log(event.target);
+    
+    var disable = true;
+    var formSubmits = document.querySelectorAll("form")
+    formSubmits.forEach(formSubmit =>{
+        formSubmit.addEventListener("submit", event =>{
+        	event.preventDefault();
+        	var form = document.getElementById(event.target.id);
+            var formImport = document.getElementById(event.target.id)[0];
+            var linkDown = form.querySelector("a")
+            var butExe = form[2]
+            if(disable == true){
+                formImport.setAttribute("disabled", disable);
+                butExe.setAttribute("disabled", disable);
+                butExe.setAttribute("value", "Processing");
+                linkDown.setAttribute("href","#");
+            }
         })
     })
     

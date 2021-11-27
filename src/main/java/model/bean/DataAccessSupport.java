@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class DataAccessSupport {
-	private static String url = "jdbc:mysql://localhost:3306/db_ltmang";
+	private static String url = "jdbc:mysql://localhost:3306/DB_LTMang";
 	private static String user = "root";
 	private static String password = "";
 	public Connection conn;
