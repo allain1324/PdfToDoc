@@ -215,7 +215,7 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input1"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					/> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getAttribute("idFile") %>" class="linkDownload"> <i
+					/> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= request.getSession().getAttribute("idFile") %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
@@ -227,7 +227,7 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input2"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					/> <a href= "http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getSession().getAttribute("idFile") %>"  class="linkDownload"> <i
+					/> <a href= "http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= request.getSession().getAttribute("idFile") %>"  class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
@@ -240,7 +240,7 @@ form .execute {
 				accept="application/pdf" title="Choose file to upload" id="input3"/>
 			<div class="exportDiv">
 				<input type="text" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="http://localhost:10000/PdfToDoc/downloadFile?idFile=<%= request.getAttribute("idFile") %>" class="linkDownload"> <i
+					accept=".docx" /> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= request.getAttribute("idFile") %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
