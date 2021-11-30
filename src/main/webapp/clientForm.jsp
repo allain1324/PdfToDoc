@@ -177,6 +177,10 @@ form .execute {
 	padding-top: 3px;
 	padding-bottom: 3px;
 }
+#formRefresh{
+	border: none;
+}
+
 </style>
 </head>
 <body>
@@ -251,7 +255,9 @@ form .execute {
 			<input type="submit" value="Execute" class="execute" />
 		</form>
 	</div>
-	<button id="addNew" disabled="true">Add new +</button>
+	<form id = "formRefresh" disabled="true" action = "checkNewDBServlet" method = "POST">
+		<input type = "submit" value = "Refresh" id="addNew">
+	</form>
 </body>
 <script>
     var addnew = document.getElementById("addNew");
