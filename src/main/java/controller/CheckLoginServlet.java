@@ -45,7 +45,7 @@ public class CheckLoginServlet extends HttpServlet {
 				destination = "adminForm.jsp";
 			else
 				destination = "clientForm.jsp";
-//			request.getSession().setAttribute("listFile", listFile);
+			request.getSession().setAttribute("listFile", listFile);
 			request.getSession().setAttribute("Account", ac);
 			response.sendRedirect(destination);
 		} else {

@@ -115,7 +115,6 @@ form {
 	justify-content: space-between;
 	margin-top: 15px;
 }
-
 #mask {
 	display: none;
 	width: 100%;
@@ -183,7 +182,12 @@ form .execute {
 <body>
 	<%
 	account ac = (account) request.getSession().getAttribute("Account");
-	//ArrayList<fileInfor> listFile = (ArrayList<fileInfor>)request.getSession().getAttribute("listFile");
+	ArrayList<fileInfor> listFile = (ArrayList<fileInfor>) request.getSession().getAttribute("listFile");
+	int demChuaCo = 3 - listFile.size();
+	for(int i = 0;i< demChuaCo;i++){
+		fileInfor infor = new fileInfor(0,0,null,"",null);
+		listFile.add(infor);
+	}
 	%>
 
 	<!-- <div style="padding: 5px; color: red; font-style: italic;">
@@ -216,38 +220,35 @@ form .execute {
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input1"/>
 			<div class="exportDiv">
-				<input type="text" name="file" class="exportFile" disabled="true"
-					/> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%=  %>" class="linkDownload"> <i
+				<input type="text" name="file" class="exportFile" disabled="true" placeholder = "<%= listFile.get(0).getfilename() %>"
+					/> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= listFile.get(0).getiD() %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
-			<% System.out.println("idFile response:" + request.getAttribute("idFile")); %>
 		</form>
 				<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form2">
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input2"/>
 			<div class="exportDiv">
-				<input type="text" name="file" class="exportFile" disabled="true"
-					/> <a href= "http://localhost:8080/PdfToDoc/downloadFile?idFile=<%=  %>"  class="linkDownload"> <i
+				<input type="text" name="file" class="exportFile" disabled="true" placeholder = "<%= listFile.get(1).getfilename() %>"
+					/> <a href= "http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= listFile.get(1).getiD() %>"  class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
-			<% System.out.println("idFile response:" + request.getSession().getAttribute("idFile")); %>
 		</form>
 
 		<form method="post"	action="${pageContext.request.contextPath}/UploadToDBServlet"enctype="multipart/form-data" id="form3">
 			<input type="file" name="file" class="importFile"
 				accept="application/pdf" title="Choose file to upload" id="input3"/>
 			<div class="exportDiv">
-				<input type="text" name="file" class="exportFile" disabled="true"
-					accept=".docx" /> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%=  %>" class="linkDownload"> <i
+				<input type="text" name="file" class="exportFile" disabled="true" placeholder = "<%= listFile.get(2).getfilename() %>"
+					accept=".docx" /> <a href="http://localhost:8080/PdfToDoc/downloadFile?idFile=<%= listFile.get(2).getiD() %>" class="linkDownload"> <i
 					class="fas fa-download" class="download"></i>
 				</a>
 			</div>
 			<input type="submit" value="Execute" class="execute" />
-			<% System.out.println("idFile response:" + request.getSession().getAttribute("idFile")); %>
 		</form>
 	</div>
 	<button id="addNew" disabled="true">Add new +</button>

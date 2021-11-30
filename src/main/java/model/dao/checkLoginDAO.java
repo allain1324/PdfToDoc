@@ -48,7 +48,7 @@ public class checkLoginDAO
 		return null;
 	}
 	
-	public ArrayList<fileInfor> GetRecentFile(int idAccount)
+	public static ArrayList<fileInfor> GetRecentFile(int idAccount)
 	{
 		ArrayList<fileInfor> res = new ArrayList<fileInfor>();
 		try
@@ -66,6 +66,7 @@ public class checkLoginDAO
 			while (rs.next())
 			{
 				fileInfor temp = new fileInfor(rs.getInt("iDRow"),rs.getInt("idAccount"),rs.getDate("dateUpload"),rs.getString("nameFileDownload"),rs.getBlob("fileDownload"));
+				System.out.println(temp.getfilename());
 				res.add(temp);
 			}
 			return res;

@@ -6,17 +6,13 @@ import model.dao.checkLoginDAO;
 
 public class checkLoginBO 
 {
-	private static checkLoginDAO cLogDAO;
-	public checkLoginBO()
-	{
-		cLogDAO = new checkLoginDAO();
-	}
 	public static account getAccountBO(String username, String password) 
 	{
 		return checkLoginDAO.getAccountDAO(username, password);
 	}
 	public static ArrayList<fileInfor> GetRecentFile(int idAccount)
 	{
-		return cLogDAO.GetRecentFile(idAccount);
+		System.out.println(idAccount + "idAccount");
+		return checkLoginDAO.GetRecentFile(idAccount);
 	}
 }
