@@ -3,45 +3,61 @@ package model.bean;
 import java.sql.Blob;
 import java.sql.Date;
 
-public class fileInfor {
+public class fileInfor 
+{
 	private int iD;
 	private int idAccount;
 	private Date dateUpload;
 	private String filename;
 	private Blob fileData;
 	
-	public int getiD() {
+	public int getiD() 
+	{
 		return iD;
 	}
-	public void setiD(int iD) {
+	public void setiD(int iD) 
+	{
 		this.iD = iD;
 	}
-	public int getIdAccount() {
+	
+	public int getIdAccount() 
+	{
 		return idAccount;
 	}
-	public void setIdAccount(int idAccount) {
+	public void setIdAccount(int idAccount) 
+	{
 		this.idAccount = idAccount;
 	}
-	public Date getDateUpload() {
+	
+	public Date getDateUpload() 
+	{
 		return dateUpload;
 	}
-	public void setDateUpload(Date dateUpload) {
+	public void setDateUpload(Date dateUpload) 
+	{
 		this.dateUpload = dateUpload;
 	}
-	public String getfilename() {
+	
+	public String getfilename() 
+	{
 		return filename;
 	}
-	public void setfilename(String filename) {
+	public void setfilename(String filename) 
+	{
 		this.filename = filename;
 	}
-	public Blob getfileData() {
+	
+	public Blob getfileData() 
+	{
 		return this.fileData;
 	}
-	public void setfileData(Blob fileData) {
+	public void setfileData(Blob fileData) 
+	{
 		this.fileData = fileData;
 	}
 	
-	public fileInfor(int id,int idAcc, Date date, String filename, Blob fileData) {
+	public fileInfor(int id,int idAcc, Date date, String filename, Blob fileData) 
+	{
 		this.iD = id;
 		this.idAccount = idAcc;
 		this.dateUpload = date;
