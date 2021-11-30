@@ -59,7 +59,7 @@ public class checkLoginDAO
 			das.LoadJDBC();
 			System.out.println("Ket noi jdbc");
 			
-			String sql = "SELECT TOP 3 * FROM fileinfor WHERE idAccount = ? ;";
+			String sql = "SELECT * FROM fileinfor WHERE idAccount = ? ORDER BY iDRow DESC LIMIT 3;";
 			PreparedStatement pstm = das.conn.prepareStatement(sql);
 			pstm.setInt(1, idAccount);
 			ResultSet rs = pstm.executeQuery();

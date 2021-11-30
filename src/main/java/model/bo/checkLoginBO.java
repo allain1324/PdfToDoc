@@ -15,7 +15,7 @@ public class checkLoginBO
 	{
 		return checkLoginDAO.getAccountDAO(username, password);
 	}
-	public ArrayList<fileInfor> GetRecentFile(int idAccount)
+	public static ArrayList<fileInfor> GetRecentFile(int idAccount)
 	{
 		return cLogDAO.GetRecentFile(idAccount);
 	}
