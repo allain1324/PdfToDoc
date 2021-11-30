@@ -5,12 +5,20 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 //import java.sql.Statement;
+import java.util.ArrayList;
+import model.bean.*;
 
-import model.bean.account;
-
-public class checkLoginDAO {
-	public static account getAccountDAO(String username, String password){
-		try {
+public class checkLoginDAO 
+{
+	private static DataAccessSupport das;
+	public checkLoginDAO()
+	{
+		das = new DataAccessSupport();
+	}
+	public static account getAccountDAO(String username, String password)
+	{
+		try 
+		{
 			 java.sql.Connection con;
 			 
 			 String query = "SELECT * FROM account where username= ? AND password = ?";
@@ -33,8 +41,38 @@ public class checkLoginDAO {
 		     }else{
 		    	 return null;
 		     }
-		}catch(Exception e) {
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<fileInfor> GetRecentFile(int idAccount)
+	{
+		ArrayList<fileInfor> res = new ArrayList<fileInfor>();
+		try
+		{
+			// Ket noi JDBC
+			das = new DataAccessSupport();
+			System.out.println("Get Recent File!");
+			das.LoadJDBC();
+			System.out.println("Ket noi jdbc");
 			
+			String sql = "SELECT TOP 3 * FROM fileinfor WHERE idAccount = ? ;";
+			PreparedStatement pstm = das.conn.prepareStatement(sql);
+			pstm.setInt(1, idAccount);
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next())
+			{
+				fileInfor temp = new fileInfor(rs.getInt("iDRow"),rs.getInt("idAccount"),rs.getDate("dateUpload"),rs.getString("nameFileDownload"),rs.getBlob("fileDownload"));
+				res.add(temp);
+			}
+			return res;
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
 		}
 		return null;
 	}
